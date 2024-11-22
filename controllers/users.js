@@ -1,4 +1,9 @@
 const User = require("../models/user");
+const {
+  BAD_REQUEST_STATUS_CODE,
+  REQUEST_NOT_FOUND,
+  DEFAULT_ERROR,
+} = require("../utils/errors");
 
 // GET /users
 
@@ -29,7 +34,20 @@ const createUser = (req, res) => {
 
 const getUser = (req, res) => {
   const { userId } = req.params;
-  User.findById(userId).then((user) => res.status(200).send(user)); //look
+  User.findById(userId)
+    .orFail()
+    .then((user) => res.status(200).send(user))
+    .catch((err) => {
+      console.error(err);
+      if (err.name === "DocumentNotFound") {
+        return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
+      }
+      if (err.name === "CastError") {
+        return res
+          .status(BAD_REQUEST_STATUS_CODE)
+          .send({ message: err.message });
+      }
+    });
 };
 
 module.exports = { getUsers, createUser, getUser };
