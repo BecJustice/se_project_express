@@ -47,6 +47,7 @@ const getUser = (req, res) => {
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
       }
+      return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
     });
 };
 

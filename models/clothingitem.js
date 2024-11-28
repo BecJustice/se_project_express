@@ -7,17 +7,19 @@ const clothingItemSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 2,
-    maxlngth: 30,
+    maxlength: 30,
   },
   weather: {
     type: String,
     required: true,
   },
-  imageURL: {
+  imageUrl: {
     type: String,
     required: true,
     validate: {
-      validator: (value) => validator.isURL(value),
+      validator(value) {
+        return validator.isURL(value);
+      },
       message: "You must enter a valid URL",
     },
   },
