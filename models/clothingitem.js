@@ -32,9 +32,6 @@ const clothingItemSchema = new mongoose.Schema({
     b: Boolean,
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
     default: [],
-    // a list of users who liked the item
-    // an ObjectId array with a reference to the user modal
-    // (empty by default)
   },
   createdAt: {
     type: Date,

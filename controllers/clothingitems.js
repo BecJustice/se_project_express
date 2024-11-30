@@ -54,24 +54,39 @@ const likeItem = (req, res) => {
   )
     .orFail()
     .then((item) => res.status(200).send({ data: item }))
-    .catch(() => {
-      res.status(DEFAULT_ERROR).send({ message: "Error from likeItem" });
+    .catch((err) => {
+      console.error(err);
+      if (err.name === "DocumentNotFound") {
+        return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
+      }
+      if (err.name === "ValidationError" || err.name === "CastError") {
+        return res
+          .status(BAD_REQUEST_STATUS_CODE)
+          .send({ message: err.message });
+      }
+      return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
     });
 };
-
-/*
 
 const dislikeItem = (req, res) =>
-ClothingItem.findByIdAndUpdate(
-  req.params.itemId,
-  { $pull: { likes: req.user._id } },
-  { new: true }
-)
-.orFail()
+  ClothingItem.findByIdAndUpdate(
+    req.params.itemId,
+    { $pull: { likes: req.user._id } },
+    { new: true }
+  )
+    .orFail()
     .then((item) => res.status(200).send({ data: item }))
-    .catch(() => {
-      res.status(DEFAULT_ERROR).send({ message: "Error from dislikeItem" });
+    .catch((err) => {
+      console.error(err);
+      if (err.name === "DocumentNotFound") {
+        return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
+      }
+      if (err.name === "ValidationError" || err.name === "CastError") {
+        return res
+          .status(BAD_REQUEST_STATUS_CODE)
+          .send({ message: err.message });
+      }
+      return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
     });
-};
-*/
-module.exports = { createItem, getItems, likeItem, deleteItem };
+
+module.exports = { createItem, getItems, likeItem, deleteItem, dislikeItem };
