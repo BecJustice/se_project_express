@@ -20,7 +20,7 @@ router.get("/", getItems);
 router.put("/:itemId/likes", likeItem);
 
 //DISLIKE
-router.delete(":itemId/likes", dislikeItem);
+router.delete("/:itemId/likes", dislikeItem);
 
 //DELETE
 router.delete("/:itemId", deleteItem);
