@@ -12,7 +12,7 @@ const getUsers = (req, res) => {
     .then((users) => res.status(200).send(users))
     .catch((err) => {
       console.error(err);
-      return res.status(DEFAULT_ERROR).send({ message: err.message }); //take a look at this again
+      return res.status(DEFAULT_ERROR).send({ message: err.message });
     });
 };
 
@@ -20,7 +20,7 @@ const createUser = (req, res) => {
   const { name, avatar } = req.body;
 
   User.create({ name, avatar })
-    .then((user) => res.status(201).send(user)) //look here too
+    .then((user) => res.status(201).send(user))
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
@@ -28,7 +28,7 @@ const createUser = (req, res) => {
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
       }
-      return res.status(DEFAULT_ERROR).send({ message: err.message }); //look
+      return res.status(DEFAULT_ERROR).send({ message: err.message });
     });
 };
 
