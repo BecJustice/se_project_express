@@ -20,7 +20,9 @@ const createItem = (req, res) => {
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
       }
-      return res.status(DEFAULT_ERROR).send({ message: err.message });
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
@@ -30,7 +32,9 @@ const getItems = (req, res) => {
       res.status(200).send(items);
     })
     .catch(() => {
-      res.status(DEFAULT_ERROR).send({ message: "Error from getItems" });
+      res
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
