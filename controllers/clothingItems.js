@@ -47,7 +47,7 @@ const deleteItem = (req, res) => {
     .then((item) => res.status(200).send(item))
     .catch((err) => {
       console.error(err);
-      if (err.name === "DocumentNotFound") {
+      if (err.name === "DocumentNotFoundError") {
         return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
       }
       if (err.name === "ValidationError" || err.name === "CastError") {
@@ -55,7 +55,9 @@ const deleteItem = (req, res) => {
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
       }
-      return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
@@ -69,7 +71,7 @@ const likeItem = (req, res) => {
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
       console.error(err);
-      if (err.name === "DocumentNotFound") {
+      if (err.name === "DocumentNotFoundError") {
         return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
       }
       if (err.name === "ValidationError" || err.name === "CastError") {
@@ -77,7 +79,9 @@ const likeItem = (req, res) => {
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
       }
-      return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
@@ -91,7 +95,7 @@ const dislikeItem = (req, res) =>
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
       console.error(err);
-      if (err.name === "DocumentNotFound") {
+      if (err.name === "DocumentNotFoundError") {
         return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
       }
       if (err.name === "ValidationError" || err.name === "CastError") {
@@ -99,7 +103,9 @@ const dislikeItem = (req, res) =>
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
       }
-      return res.status(REQUEST_NOT_FOUND).send({ message: err.message });
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 
 module.exports = { createItem, getItems, likeItem, deleteItem, dislikeItem };
