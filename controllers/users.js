@@ -34,6 +34,9 @@ const login = (req, res) => {
           .status(UNAUTHORIZED_STATUS_CODE)
           .send({ message: "Invalid E-mail or Password" });
       }
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
