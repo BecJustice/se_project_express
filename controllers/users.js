@@ -28,9 +28,12 @@ const login = (req, res) => {
     })
     .catch((err) => {
       console.error("Login error:", err.message);
-      return res.status(UNAUTHORIZED_STATUS_CODE).send({
-        message: "Invalid E-mail or Password",
-      });
+
+      if (err.message === "Incorrect email or password") {
+        return res
+          .status(UNAUTHORIZED_STATUS_CODE)
+          .send({ message: "Invalid E-mail or Password" });
+      }
     });
 };
 
